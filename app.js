@@ -8,7 +8,6 @@ app.use(express.json({ extended: false }));
 app.use(cors());
 
 app.use('/api/v1/partners', require('./routes/partners'));
-// app.use('/api/v1/users', require('./routes/users'));
 
 const { PORT } = process.env;
 const server = app.listen(PORT, () => {
