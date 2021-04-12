@@ -1,4 +1,5 @@
 const util = require('util');
+const { validationResult } = require('express-validator');
 
 const pool = require('../database');
 const { SERVER_ERROR } = require('../utils/constants');
@@ -24,6 +25,12 @@ exports.getPartners = async (req, res) => {
 };
 
 exports.createPartner = async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const { name, email, country, region, bio, socials } = req.body;
   const partnerId = generateId();
   const createdDateTime = getDateTime();
